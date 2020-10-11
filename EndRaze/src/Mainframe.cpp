@@ -106,6 +106,9 @@ namespace EZ {
 			if (!_pause) {
 				input();
 				update();
+#if DEBUG
+				cout << player.rec.y << endl;
+#endif
 				collisions();
 				draw();
 			}
@@ -116,17 +119,21 @@ namespace EZ {
 
 	void Mainframe::input() {
 		if (IsKeyPressed(KEY_W)){
-			player.rec.y -= 150.0f;
-			if (player.rec.y<0){
-				player.rec.y = -150.0f;
+			if (player.rec.y==75.0f){
+				
 			}
-			
+			else {
+				player.rec.y -= 150.0f;
+			}
 		}
 		if (IsKeyPressed(KEY_S)) {
-			
+			if (player.rec.y == 375.0f) {
+
+			}
+			else {
 				player.rec.y += 150.0f;
-			
-			
+			}
+				
 		}
 	}
 	void Mainframe::update() {

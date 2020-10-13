@@ -102,12 +102,15 @@ namespace EZ {
 	}
 	void Mainframe::gameScreen() {
 		setPlayerParameters();
+		setObs();
 		while (!WindowShouldClose() && screenId == screenID::game&&_mainBool) {
 			if (!_pause) {
 				input();
 				update();
 #if DEBUG
-				cout << player.rec.y << endl;
+			/*	cout << player.rec.y << endl;*/
+				cout << obs[0].rec.x << endl;
+				cout << obs[0].rec.y << endl;
 #endif
 				collisions();
 				draw();
@@ -137,7 +140,17 @@ namespace EZ {
 		}
 	}
 	void Mainframe::update() {
-	
+		for (int i = 0; i < ObstacleMax; i++) {
+			obs[i].rec.x = obs[i].rec.x - GetFrameTime()*400.0f;
+
+		}
+		for (int i = 0; i < ObstacleMax; i++){
+			if (obs[i].rec.x < -50) {
+				/*randPos(obs[i]);*/
+				obs[i].rec.x = 800;
+
+			}
+		}
 	}
 	void Mainframe::collisions() {
 	
@@ -150,6 +163,9 @@ namespace EZ {
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height + 150.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height + 150.0f , RED);
 		EndDrawing();
+		for (int i = 0; i < ObstacleMax; i++){
+			DrawRectangleRec(obs[i].rec, YELLOW);
+		}
 	
 	}
 

@@ -15,7 +15,7 @@
     <ClCompile Include="..\src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Lane.cpp">
+    <ClCompile Include="..\src\Obstacle.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,7 +26,7 @@
     <ClInclude Include="..\src\Player.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Lane.h">
+    <ClInclude Include="..\src\Obstacle.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

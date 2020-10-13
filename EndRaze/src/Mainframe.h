@@ -2,6 +2,7 @@
 #define MAINFRAME_H
 #include "raylib.h"
 #include "Player.h"
+#include "Obstacle.h"
 #include <iostream>
 using namespace std;
 

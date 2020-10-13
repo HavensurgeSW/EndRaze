@@ -1,10 +1,15 @@
 #pragma once
 #include "raylib.h"
 
-struct Obstacle {
-	Rectangle rec;
-	Texture2D obstacle;
-	
-};
+namespace EZ {
+	struct Obstacle {
+		Rectangle rec;
+		Texture2D obstacle;
+	};
 
-void randPos();
+	const int ObstacleMax = 10;
+	extern Obstacle obs[ObstacleMax];
+
+	void setObs();
+	void randPos(Obstacle _obs);
+}

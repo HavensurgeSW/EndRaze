@@ -6,8 +6,8 @@ struct Obstacle {
 	Texture2D obstacle;
 };
 
-const int ObstacleMax = 10;
+const int ObstacleMax = 8;
 extern Obstacle obs[ObstacleMax];
 
 void setObs();
-void randPos(Obstacle _obs);
+Obstacle randPos(Obstacle _obs);

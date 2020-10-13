@@ -5,14 +5,15 @@ Obstacle obs[ObstacleMax];
 
 void setObs() {
 	for (int i = 0; i < ObstacleMax; i++) {
-		obs[i].rec.height = 60;
+		obs[i].rec.height = 30;
 		obs[i].rec.width = 25;
 		randPos(obs[i]);
+		obs[i].rec.y = 75;
 	}
 }
-void randPos(Obstacle _obs) {
-	/*_obs.rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() + GetScreenWidth() / 2);*/
-	_obs.rec.x = 800;
+Obstacle randPos(Obstacle _obs) {
+	_obs.rec.x = GetRandomValue(1200, 2000);
+	/*_obs.rec.x = 800;*/
 
 	int random = GetRandomValue(1, 3);
 	switch (random) {
@@ -26,5 +27,6 @@ void randPos(Obstacle _obs) {
 		_obs.rec.y = 375;
 		break;
 	}
+	return _obs;
 
 }

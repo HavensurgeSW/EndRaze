@@ -14,6 +14,7 @@ namespace EZ {
 		int _winHeight;
 		bool _pause;
 		bool _mainBool;
+		int _parallax1;
 
 	public:
 
@@ -22,7 +23,8 @@ namespace EZ {
 			game
 		};
 		screenID screenId;
-		Texture2D background;
+		Texture2D background1;
+		Texture2D background2;
 
 		Mainframe();
 		~Mainframe();
@@ -32,11 +34,12 @@ namespace EZ {
 		void menuScreen();
 		void gameScreen();
 		
-
 		void update();
 		void draw();
 		void input();
 		void collisions();
+
+		void resize();
 
 
 	};

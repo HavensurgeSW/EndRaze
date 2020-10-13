@@ -8,6 +8,7 @@ namespace EZ {
 		_pause = false;
 		_mainBool = true;
 		screenID screenId;
+		_parallax1 = 0;
 	
 	}
 	Mainframe::~Mainframe() {
@@ -42,6 +43,9 @@ namespace EZ {
 		}
 	}
 	void Mainframe::menuScreen() {
+		background1 = LoadTexture("../res/parallax-mountain-bg.png");
+		background2 = LoadTexture("../res/parallax-mountain-mountains.png");
+
 		Rectangle playButton;
 		playButton.x = 20.0f;
 		playButton.y = GetScreenHeight() / 2.0f;
@@ -59,12 +63,15 @@ namespace EZ {
 		closeButton.height = 30.0f;
 		closeButton.width = 81.25f;
 
-
+		Vector2 background2pos = { 0,0 };
 
 		while (!WindowShouldClose() && screenId == screenID::menu&&_mainBool) {
 			BeginDrawing();
 			ClearBackground(BLACK);
-			DrawTexture(background, 0, -250, RAYWHITE);
+			DrawTextureEx(background1, {0,0}, 0.0f, 3.0f,RAYWHITE);
+
+			/*DrawTextureEx(background2, { 0,0 }, 0, 3.0f, RAYWHITE);*/
+			DrawTextureEx(background2, { background2pos.x - 2.0f , 50 }, 0.0f, 3.0f, RAYWHITE);
 
 			DrawText(FormatText("END-RAZE"), 20, 10, 120, WHITE);
 
@@ -101,6 +108,7 @@ namespace EZ {
 		}
 	}
 	void Mainframe::gameScreen() {
+		_parallax1 = GetFrameTime()*400.0f;
 		setPlayerParameters();
 		setObs();
 		while (!WindowShouldClose() && screenId == screenID::game&&_mainBool) {
@@ -108,9 +116,9 @@ namespace EZ {
 				input();
 				update();
 #if DEBUG
-			/*	cout << player.rec.y << endl;*/
-				cout << obs[0].rec.x << endl;
-				cout << obs[0].rec.y << endl;
+				cout << player.rec.y << endl;
+			/*	cout << obs[0].rec.x << endl;
+				cout << obs[0].rec.y << endl;*/
 #endif
 				collisions();
 				draw();
@@ -122,32 +130,48 @@ namespace EZ {
 
 	void Mainframe::input() {
 		if (IsKeyPressed(KEY_W)){
-			if (player.rec.y==75.0f){
+			if (player.rec.y==125.0f){
 				
 			}
 			else {
-				player.rec.y -= 150.0f;
+				player.rec.y -= 100.0f;
 			}
 		}
 		if (IsKeyPressed(KEY_S)) {
-			if (player.rec.y == 375.0f) {
+			if (player.rec.y == 325.0f) {
 
 			}
 			else {
-				player.rec.y += 150.0f;
+				player.rec.y += 100.0f;
 			}
 				
 		}
 	}
 	void Mainframe::update() {
 		for (int i = 0; i < ObstacleMax; i++) {
-			obs[i].rec.x = obs[i].rec.x - GetFrameTime()*400.0f;
+			obs[i].rec.x = obs[i].rec.x - _parallax1;
 
 		}
 		for (int i = 0; i < ObstacleMax; i++){
 			if (obs[i].rec.x < -50) {
-				/*randPos(obs[i]);*/
-				obs[i].rec.x = 800;
+				obs[i].rec.x = GetRandomValue(GetScreenWidth()+10, GetScreenWidth()*2);
+				switch (GetRandomValue(1,3)) {
+				case 1:
+					obs[i].rec.y = 125;
+					break;
+				case 2:
+					obs[i].rec.y = 225;
+					break;
+				case 3:
+					obs[i].rec.y = 325;
+					break;
+				}
+				for (int j = 0; j < ObstacleMax; j++){
+					if (CheckCollisionRecs(obs[i].rec, obs[j].rec)) {
+						obs[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
+					}
+				}
+				
 
 			}
 		}
@@ -159,15 +183,17 @@ namespace EZ {
 		BeginDrawing();
 		ClearBackground(BLACK);
 		DrawRectangleRec(player.rec,player.color);
-		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 150.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 150.0f, RED);
+		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 100.0f, RED);
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);
-		DrawLine(0, GetScreenHeight() / 2 + player.rec.height + 150.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height + 150.0f , RED);
+		DrawLine(0, GetScreenHeight() / 2 + player.rec.height + 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height + 100.0f , RED);
 		EndDrawing();
 		for (int i = 0; i < ObstacleMax; i++){
 			DrawRectangleRec(obs[i].rec, YELLOW);
 		}
 	
 	}
+
+	
 
 
 

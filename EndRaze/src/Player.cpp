@@ -15,5 +15,6 @@ namespace EZ {
 		player.atk.height = 35;
 		player.atk.x = player.rec.x + player.rec.width;
 		player.atk.y = player.rec.y;
+		player.tex = LoadTexture("../res/CloakGuy.png");
 	}
 }

@@ -334,8 +334,8 @@ namespace EZ {
 			}
 		}
 	
-
-		DrawRectangleRec(player.rec,player.color);
+		DrawTexture(player.tex,player.rec.x,player.rec.y, RAYWHITE);
+	/*	DrawRectangleRec(player.rec,player.color);*/
 		DrawRectangleLines(player.atk.x, player.atk.y, player.atk.width, player.atk.height, WHITE);
 
 		for (int i = 0; i < 8; i++){

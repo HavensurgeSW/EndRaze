@@ -8,7 +8,7 @@ namespace EZ {
 		Rectangle atk;
 		Color color;
 		int lives;
-		int lane;
+		Texture2D tex;
 	};
 	extern Player player;
 	void setPlayerParameters();

@@ -20,6 +20,7 @@ namespace EZ {
 		InitWindow(_winWidth, _winHeight, "HSS - End-Raze");
 		SetTargetFPS(60);
 		SetExitKey(KEY_VOLUME_UP);
+		InitAudioDevice();
 	}
 	void Mainframe::setScene(int scene) {
 		switch (scene) {
@@ -43,6 +44,7 @@ namespace EZ {
 		}
 	}
 	void Mainframe::menuScreen() {
+		mainTheme = LoadMusicStream("../res/sounds/MenuTheme.ogg");
 		background1 = LoadTexture("../res/parallax-mountain-bg.png");
 		background2 = LoadTexture("../res/parallax-mountain-mountains.png");
 
@@ -63,15 +65,16 @@ namespace EZ {
 		closeButton.height = 30.0f;
 		closeButton.width = 81.25f;
 
-		Vector2 background2pos = { 0,0 };
+		PlayMusicStream(mainTheme);
 
 		while (!WindowShouldClose() && screenId == screenID::menu&&_mainBool) {
+			UpdateMusicStream(mainTheme);
 			BeginDrawing();
 			ClearBackground(BLACK);
-			DrawTextureEx(background1, {0,0}, 0.0f, 3.0f,RAYWHITE);
 
-			/*DrawTextureEx(background2, { 0,0 }, 0, 3.0f, RAYWHITE);*/
-			DrawTextureEx(background2, { background2pos.x - 2.0f , 50 }, 0.0f, 3.0f, RAYWHITE);
+			DrawTextureEx(background1, {0,0}, 0.0f, 3.0f,RAYWHITE);
+			DrawTextureEx(background2, { 0,0 }, 0, 3.0f, RAYWHITE);
+			
 
 			DrawText(FormatText("END-RAZE"), 20, 10, 120, BLACK);
 
@@ -106,9 +109,12 @@ namespace EZ {
 				setScene(1);
 			}
 		}
+		
 	}
 	void Mainframe::gameScreen() {
 		floor = LoadTexture("../res/Floor.png");
+		obstacle = LoadTexture("../res/obs.png");
+		destructable = LoadTexture("../res/destructable.png");
 		_parallax1 = GetFrameTime()*350.0f;
 		setPlayerParameters();
 		setObs();
@@ -128,6 +134,10 @@ namespace EZ {
 				collisions();
 				draw();
 			}
+			UnloadTexture(floor);
+			UnloadTexture(obstacle);
+			UnloadTexture(destructable);
+
 		}
 
 	}
@@ -283,11 +293,6 @@ namespace EZ {
 		ClearBackground(BLACK);
 		DrawTextureEx(background1, { 0,0 }, 0.0f, 3.0f, RAYWHITE);
 		DrawTextureEx(background2, { 0 , 50 }, 0.0f, 3.0f, RAYWHITE);
-		for (int i = 0; i < 8; i++){
-			DrawTexture(floor, 100 * i, 160, RAYWHITE);
-			DrawTexture(floor, 100 * i, 260, RAYWHITE);
-			DrawTexture(floor, 100 * i, 360, RAYWHITE);
-		}
 
 #if DEBUG
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 100.0f, RED);
@@ -296,7 +301,8 @@ namespace EZ {
 #endif
 		for (int i = 0; i < ObstacleMax; i++){
 			if (obs[i].active){
-				DrawRectangleRec(obs[i].rec, YELLOW);
+				DrawTexture(obstacle, obs[i].rec.x, obs[i].rec.y, RAYWHITE);
+			
 			}
 		}
 
@@ -305,15 +311,21 @@ namespace EZ {
 				DrawRectangleRec(unj[i].rec, BLUE);
 			}
 		}
-
-		for (int i = 0; i < UnjMax; i++) {
+		for (int i = 0; i < DestrucMax; i++) {
 			if (des[i].active){
-				DrawRectangleRec(des[i].rec, GREEN);
+				DrawTexture(destructable, des[i].rec.x, des[i].rec.y, RAYWHITE);
 			}
 		}
 	
+
 		DrawRectangleRec(player.rec,player.color);
 		DrawRectangleLines(player.atk.x, player.atk.y, player.atk.width, player.atk.height, WHITE);
+
+		for (int i = 0; i < 8; i++){
+			DrawTexture(floor, 100 * i, 160, RAYWHITE);
+			DrawTexture(floor, 100 * i, 260, RAYWHITE);
+			DrawTexture(floor, 100 * i, 360, RAYWHITE);
+		}
 		EndDrawing();
 	}
 

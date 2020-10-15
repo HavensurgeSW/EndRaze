@@ -28,6 +28,10 @@ namespace EZ {
 		Texture2D background1;
 		Texture2D background2;
 		Texture2D floor;
+		Texture2D obstacle;
+		Texture2D destructable;
+		Music mainTheme;
+		Music gameTheme;
 
 		Mainframe();
 		~Mainframe();

@@ -24,14 +24,14 @@
     <ClCompile Include="..\src\Mainframe.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
     <ClCompile Include="..\src\Player.cpp" />
-    <ClCompile Include="UnJumpObs.cpp" />
+    <ClCompile Include="..\src\UnJumpObs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\DestrucObs.h" />
     <ClInclude Include="..\src\Mainframe.h" />
     <ClInclude Include="..\src\Obstacle.h" />
     <ClInclude Include="..\src\Player.h" />
-    <ClInclude Include="UnJumpObs.h" />
+    <ClInclude Include="..\src\UnJumpObs.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

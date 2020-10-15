@@ -5,6 +5,7 @@ namespace EZ {
 
 	struct Player {
 		Rectangle rec;
+		Rectangle atk;
 		Color color;
 		int lives;
 		int lane;

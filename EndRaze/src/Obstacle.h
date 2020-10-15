@@ -4,10 +4,11 @@
 struct Obstacle {
 	Rectangle rec;
 	Texture2D obstacle;
+	bool active;
 };
 
-const int ObstacleMax = 4;
+const int ObstacleMax = 3;
 extern Obstacle obs[ObstacleMax];
 
 void setObs();
-Obstacle randPos(Obstacle _obs);
+

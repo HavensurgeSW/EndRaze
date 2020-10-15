@@ -92,7 +92,7 @@ namespace EZ {
 				DrawText(FormatText("Close"), 20, (GetScreenHeight() / 2) + 150, 30, WHITE);
 
 
-			DrawText(FormatText("v 0.1"), GetScreenWidth() - 50, 1, 20, WHITE);
+			DrawText(FormatText("v 0.4"), GetScreenWidth() - 50, 1, 20, WHITE);
 			if (CheckCollisionPointRec(GetMousePosition(), creditsButton)) {
 				DrawText(FormatText("Engine: Raylib 3.0"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 3) + 20, 30, WHITE);
 				DrawText(FormatText("Created by:"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 3) + 100, 30, WHITE);
@@ -108,7 +108,7 @@ namespace EZ {
 		}
 	}
 	void Mainframe::gameScreen() {
-		_parallax1 = GetFrameTime()*400.0f;
+		_parallax1 = GetFrameTime()*350.0f;
 		setPlayerParameters();
 		setObs();
 		setUnj();
@@ -118,7 +118,8 @@ namespace EZ {
 				input();
 				update();
 #if DEBUG
-				cout << GetScreenHeight() / 2 + player.rec.height << endl;
+				cout << player.lives << endl;
+			/*	cout << GetScreenHeight() / 2 + player.rec.height << endl;*/
 			/*	cout << player.rec.y << endl;*/
 			/*	cout << obs[0].rec.x << endl;
 				cout << obs[0].rec.y << endl;*/
@@ -138,6 +139,7 @@ namespace EZ {
 			}
 			else {
 				player.rec.y -= 100.0f;
+				player.atk.y -= 100.0f;
 			}
 		}
 		if (IsKeyPressed(KEY_S)) {
@@ -146,17 +148,27 @@ namespace EZ {
 			}
 			else {
 				player.rec.y += 100.0f;
+				player.atk.y += 100.0f;
 			}
-				
+		}
+		
+		if (IsKeyPressed(KEY_E)){
+			for (int i = 0; i < DestrucMax; i++){
+				if (CheckCollisionRecs(player.atk,des[i].rec)){
+					des[i].active = false;
+				}
+			}
 		}
 	}
 	void Mainframe::update() {
+		//---------------Moving Obstacles-------------------//
 		for (int i = 0; i < ObstacleMax; i++) {
 			obs[i].rec.x = obs[i].rec.x - _parallax1;
 
 		}
 		for (int i = 0; i < ObstacleMax; i++){
 			if (obs[i].rec.x < -50) {
+				obs[i].active = true;
 				obs[i].rec.x = GetRandomValue(GetScreenWidth()+10, GetScreenWidth()*2);
 				switch (GetRandomValue(1,3)) {
 				case 1:
@@ -178,13 +190,14 @@ namespace EZ {
 
 			}
 		}
-
+		//---------------Moving UnJumpables-------------------//
 		for (int i = 0; i < UnjMax; i++) {
 			unj[i].rec.x = unj[i].rec.x - _parallax1;
 
 		}
 		for (int i = 0; i < UnjMax; i++) {
 			if (unj[i].rec.x < -50) {
+				unj[i].active = true;
 				unj[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 				switch (GetRandomValue(1, 3)) {
 				case 1:
@@ -206,13 +219,14 @@ namespace EZ {
 
 			}
 		}
-
+		//---------------Moving destructibles-------------------//
 		for (int i = 0; i < DestrucMax; i++) {
 			des[i].rec.x = des[i].rec.x - _parallax1;
 
 		}
 		for (int i = 0; i < DestrucMax; i++) {
 			if (des[i].rec.x < -50) {
+				des[i].active = true;
 				des[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 				switch (GetRandomValue(1, 3)) {
 				case 1:
@@ -237,21 +251,46 @@ namespace EZ {
 
 	}
 	void Mainframe::collisions() {
+		for (int i = 0; i < DestrucMax; i++){
+			if (des[i].active&&CheckCollisionRecs(player.rec, des[i].rec) && des[i].active){
+				des[i].active = false;
+				player.lives--;
+
+			}
+		}
+		for (int i = 0; i < ObstacleMax; i++) {
+			if (CheckCollisionRecs(player.rec, obs[i].rec)&&obs[i].active) {
+				obs[i].active = false;
+				player.lives--;
+			}
+		}
+		for(int i = 0; i <UnjMax; i++) {
+			if (CheckCollisionRecs(player.rec, unj[i].rec) && unj[i].active) {
+				unj[i].active = false;
+				player.lives--;
+			}
+		}
 	
 	}
 	void Mainframe::draw() {
 		BeginDrawing();
 		ClearBackground(BLACK);
-		DrawRectangleRec(player.rec,player.color);
+		DrawTextureEx(background1, { 0,0 }, 0.0f, 3.0f, RAYWHITE);
+#if DEBUG
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 100.0f, RED);
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height + 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height + 100.0f , RED);
+#endif
 		for (int i = 0; i < ObstacleMax; i++){
-			DrawRectangleRec(obs[i].rec, YELLOW);
+			if (obs[i].active){
+				DrawRectangleRec(obs[i].rec, YELLOW);
+			}
 		}
 
 		for (int i = 0; i < UnjMax; i++) {
-			DrawRectangleRec(unj[i].rec, BLUE);
+			if (unj[i].active){
+				DrawRectangleRec(unj[i].rec, BLUE);
+			}
 		}
 
 		for (int i = 0; i < UnjMax; i++) {
@@ -260,6 +299,8 @@ namespace EZ {
 			}
 		}
 	
+		DrawRectangleRec(player.rec,player.color);
+		DrawRectangleLines(player.atk.x, player.atk.y, player.atk.width, player.atk.height, WHITE);
 		EndDrawing();
 	}
 

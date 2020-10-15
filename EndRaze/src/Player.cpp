@@ -10,7 +10,10 @@ namespace EZ {
 		player.rec.x = 15;
 		player.rec.y = GetScreenHeight() / 2;
 		player.color = RAYWHITE;
-		int live = 3;
-		player.lane = 2;
+		player.lives = 3;
+		player.atk.width = 50;
+		player.atk.height = 35;
+		player.atk.x = player.rec.x + player.rec.width;
+		player.atk.y = player.rec.y;
 	}
 }

@@ -18,10 +18,10 @@
     <ClCompile Include="..\src\Obstacle.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="UnJumpObs.cpp">
+    <ClCompile Include="..\src\DestrucObs.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\DestrucObs.cpp">
+    <ClCompile Include="..\src\UnJumpObs.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,10 +35,10 @@
     <ClInclude Include="..\src\Obstacle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="UnJumpObs.h">
+    <ClInclude Include="..\src\DestrucObs.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\DestrucObs.h">
+    <ClInclude Include="..\src\UnJumpObs.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

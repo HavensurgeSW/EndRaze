@@ -108,6 +108,7 @@ namespace EZ {
 		}
 	}
 	void Mainframe::gameScreen() {
+		floor = LoadTexture("../res/Floor.png");
 		_parallax1 = GetFrameTime()*350.0f;
 		setPlayerParameters();
 		setObs();
@@ -282,6 +283,12 @@ namespace EZ {
 		ClearBackground(BLACK);
 		DrawTextureEx(background1, { 0,0 }, 0.0f, 3.0f, RAYWHITE);
 		DrawTextureEx(background2, { 0 , 50 }, 0.0f, 3.0f, RAYWHITE);
+		for (int i = 0; i < 8; i++){
+			DrawTexture(floor, 100 * i, 160, RAYWHITE);
+			DrawTexture(floor, 100 * i, 260, RAYWHITE);
+			DrawTexture(floor, 100 * i, 360, RAYWHITE);
+		}
+
 #if DEBUG
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 100.0f, RED);
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);

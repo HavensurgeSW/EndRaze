@@ -27,6 +27,7 @@ namespace EZ {
 		screenID screenId;
 		Texture2D background1;
 		Texture2D background2;
+		Texture2D floor;
 
 		Mainframe();
 		~Mainframe();

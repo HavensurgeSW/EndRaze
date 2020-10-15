@@ -12,6 +12,7 @@ namespace EZ {
 	
 	}
 	Mainframe::~Mainframe() {
+		CloseAudioDevice();
 		CloseWindow();
 	}
 
@@ -44,9 +45,12 @@ namespace EZ {
 		}
 	}
 	void Mainframe::menuScreen() {
-		mainTheme = LoadMusicStream("../res/sounds/MenuTheme.ogg");
+
+
 		background1 = LoadTexture("../res/parallax-mountain-bg.png");
 		background2 = LoadTexture("../res/parallax-mountain-mountains.png");
+		mainTheme = LoadMusicStream("../res/sounds/MenuTheme.ogg");
+		SetMusicVolume(mainTheme,0.4f);
 
 		Rectangle playButton;
 		playButton.x = 20.0f;
@@ -115,11 +119,17 @@ namespace EZ {
 		floor = LoadTexture("../res/Floor.png");
 		obstacle = LoadTexture("../res/obs.png");
 		destructable = LoadTexture("../res/destructable.png");
+		gameTheme = LoadMusicStream("../res/sounds/GameplayTheme.ogg");
+		SetMusicVolume(gameTheme, 0.4f);
+
 		_parallax1 = GetFrameTime()*350.0f;
 		setPlayerParameters();
 		setObs();
 		setUnj();
 		setDestruc();
+
+		PlayMusicStream(gameTheme);
+
 		while (!WindowShouldClose() && screenId == screenID::game&&_mainBool) {
 			if (!_pause) {
 				input();
@@ -134,12 +144,13 @@ namespace EZ {
 				collisions();
 				draw();
 			}
-			UnloadTexture(floor);
-			UnloadTexture(obstacle);
-			UnloadTexture(destructable);
 
 		}
 
+			UnloadTexture(floor);
+			UnloadTexture(obstacle);
+			UnloadTexture(destructable);
+			UnloadMusicStream(gameTheme);
 	}
 
 
@@ -172,6 +183,8 @@ namespace EZ {
 		}
 	}
 	void Mainframe::update() {
+		//---------------MUSIC UPDATE-----------------------//
+		UpdateMusicStream(gameTheme);
 		//---------------LOSE CONDITION---------------------//
 		if (player.lives<=0){
 			setScene(0);
@@ -302,7 +315,6 @@ namespace EZ {
 		for (int i = 0; i < ObstacleMax; i++){
 			if (obs[i].active){
 				DrawTexture(obstacle, obs[i].rec.x, obs[i].rec.y, RAYWHITE);
-			
 			}
 		}
 
@@ -328,7 +340,5 @@ namespace EZ {
 		}
 		EndDrawing();
 	}
-
-	
 
 }

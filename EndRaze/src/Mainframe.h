@@ -32,6 +32,7 @@ namespace EZ {
 		Texture2D destructable;
 		Music mainTheme;
 		Music gameTheme;
+		Sound collision;
 
 		Mainframe();
 		~Mainframe();

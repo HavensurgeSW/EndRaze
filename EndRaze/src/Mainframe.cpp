@@ -99,7 +99,7 @@ namespace EZ {
 				DrawText(FormatText("Close"), 20, (GetScreenHeight() / 2) + 150, 30, WHITE);
 
 
-			DrawText(FormatText("v 0.4"), GetScreenWidth() - 50, 1, 20, WHITE);
+			DrawText(FormatText("v 0.5"), GetScreenWidth() - 50, 1, 20, WHITE);
 			if (CheckCollisionPointRec(GetMousePosition(), creditsButton)) {
 				DrawText(FormatText("Engine: Raylib 3.0"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 3) + 20, 30, WHITE);
 				DrawText(FormatText("Created by:"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 3) + 100, 30, WHITE);
@@ -120,7 +120,8 @@ namespace EZ {
 		obstacle = LoadTexture("../res/obs.png");
 		destructable = LoadTexture("../res/destructable.png");
 		gameTheme = LoadMusicStream("../res/sounds/GameplayTheme.ogg");
-		SetMusicVolume(gameTheme, 0.4f);
+		collision = LoadSound("../res/sounds/collision.ogg");
+		SetMusicVolume(gameTheme, 0.2f);
 
 		_parallax1 = GetFrameTime()*350.0f;
 		setPlayerParameters();
@@ -147,10 +148,11 @@ namespace EZ {
 
 		}
 
-			UnloadTexture(floor);
-			UnloadTexture(obstacle);
-			UnloadTexture(destructable);
-			UnloadMusicStream(gameTheme);
+		UnloadTexture(floor);
+		UnloadTexture(obstacle);
+		UnloadTexture(destructable);
+		UnloadMusicStream(gameTheme);
+		UnloadSound(collision);
 	}
 
 
@@ -282,6 +284,7 @@ namespace EZ {
 	void Mainframe::collisions() {
 		for (int i = 0; i < DestrucMax; i++){
 			if (des[i].active&&CheckCollisionRecs(player.rec, des[i].rec) && des[i].active){
+				PlaySound(collision);
 				des[i].active = false;
 				player.lives--;
 
@@ -289,12 +292,14 @@ namespace EZ {
 		}
 		for (int i = 0; i < ObstacleMax; i++) {
 			if (CheckCollisionRecs(player.rec, obs[i].rec)&&obs[i].active) {
+				PlaySound(collision);
 				obs[i].active = false;
 				player.lives--;
 			}
 		}
 		for(int i = 0; i <UnjMax; i++) {
 			if (CheckCollisionRecs(player.rec, unj[i].rec) && unj[i].active) {
+				PlaySound(collision);
 				unj[i].active = false;
 				player.lives--;
 			}

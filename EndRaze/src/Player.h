@@ -9,6 +9,7 @@ namespace EZ {
 		Color color;
 		int lives;
 		Texture2D tex;
+		int score;
 	};
 	extern Player player;
 	void setPlayerParameters();

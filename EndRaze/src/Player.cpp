@@ -16,5 +16,6 @@ namespace EZ {
 		player.atk.x = player.rec.x + player.rec.width;
 		player.atk.y = player.rec.y;
 		player.tex = LoadTexture("../res/CloakGuy.png");
+		player.score = -100;
 	}
 }

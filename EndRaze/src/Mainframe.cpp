@@ -176,7 +176,7 @@ namespace EZ {
 			}
 		}
 		
-		if (IsKeyPressed(KEY_E)){
+		if (IsKeyDown(KEY_E)){
 			for (int i = 0; i < DestrucMax; i++){
 				if (CheckCollisionRecs(player.atk,des[i].rec)){
 					des[i].active = false;
@@ -199,6 +199,7 @@ namespace EZ {
 		}
 		for (int i = 0; i < ObstacleMax; i++) {
 			if (obs[i].rec.x < -50) {
+				player.score += 10;
 				obs[i].active = true;
 				obs[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 				switch (GetRandomValue(1, 3)) {
@@ -228,6 +229,7 @@ namespace EZ {
 		}
 		for (int i = 0; i < UnjMax; i++) {
 			if (unj[i].rec.x < -50) {
+				player.score += 10;
 				unj[i].active = true;
 				unj[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 				switch (GetRandomValue(1, 3)) {
@@ -257,6 +259,7 @@ namespace EZ {
 		}
 		for (int i = 0; i < DestrucMax; i++) {
 			if (des[i].rec.x < -50) {
+				player.score += 10;
 				des[i].active = true;
 				des[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 				switch (GetRandomValue(1, 3)) {
@@ -336,13 +339,22 @@ namespace EZ {
 	
 		DrawTexture(player.tex,player.rec.x,player.rec.y, RAYWHITE);
 	/*	DrawRectangleRec(player.rec,player.color);*/
+#if DEBUG
 		DrawRectangleLines(player.atk.x, player.atk.y, player.atk.width, player.atk.height, WHITE);
+#endif
 
 		for (int i = 0; i < 8; i++){
 			DrawTexture(floor, 100 * i, 160, RAYWHITE);
 			DrawTexture(floor, 100 * i, 260, RAYWHITE);
 			DrawTexture(floor, 100 * i, 360, RAYWHITE);
 		}
+
+		DrawText("SCORE:", player.rec.x, GetScreenHeight()/15,20,BLACK);
+		DrawText(FormatText("%i", player.score), player.rec.x + 80, GetScreenHeight() / 15, 20, BLACK);
+
+		DrawText("LIVES:", player.rec.x, GetScreenHeight() / 9, 20, BLACK);
+		DrawText(FormatText("%i", player.lives), player.rec.x + 80, GetScreenHeight() / 9, 20, BLACK);
+
 		EndDrawing();
 	}
 

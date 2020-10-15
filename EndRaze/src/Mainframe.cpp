@@ -73,7 +73,7 @@ namespace EZ {
 			/*DrawTextureEx(background2, { 0,0 }, 0, 3.0f, RAYWHITE);*/
 			DrawTextureEx(background2, { background2pos.x - 2.0f , 50 }, 0.0f, 3.0f, RAYWHITE);
 
-			DrawText(FormatText("END-RAZE"), 20, 10, 120, WHITE);
+			DrawText(FormatText("END-RAZE"), 20, 10, 120, BLACK);
 
 			if (CheckCollisionPointRec(GetMousePosition(), playButton))
 				DrawText(FormatText("Play"), 20, GetScreenHeight() / 2, 30, RED);
@@ -161,18 +161,23 @@ namespace EZ {
 		}
 	}
 	void Mainframe::update() {
+		//---------------LOSE CONDITION---------------------//
+		if (player.lives<=0){
+			setScene(0);
+		}
+
 		//---------------Moving Obstacles-------------------//
 		for (int i = 0; i < ObstacleMax; i++) {
 			obs[i].rec.x = obs[i].rec.x - _parallax1;
 
 		}
-		for (int i = 0; i < ObstacleMax; i++){
+		for (int i = 0; i < ObstacleMax; i++) {
 			if (obs[i].rec.x < -50) {
 				obs[i].active = true;
-				obs[i].rec.x = GetRandomValue(GetScreenWidth()+10, GetScreenWidth()*2);
-				switch (GetRandomValue(1,3)) {
+				obs[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
+				switch (GetRandomValue(1, 3)) {
 				case 1:
-					obs[i].rec.y = 160-obs[i].rec.height;
+					obs[i].rec.y = 160 - obs[i].rec.height;
 					break;
 				case 2:
 					obs[i].rec.y = 260 - obs[i].rec.height;
@@ -181,12 +186,12 @@ namespace EZ {
 					obs[i].rec.y = 360 - obs[i].rec.height;
 					break;
 				}
-				for (int j = 0; j < ObstacleMax; j++){
+				for (int j = 0; j < ObstacleMax; j++) {
 					if (CheckCollisionRecs(obs[i].rec, obs[j].rec)) {
 						obs[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 					}
 				}
-				
+
 
 			}
 		}
@@ -201,10 +206,10 @@ namespace EZ {
 				unj[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
 				switch (GetRandomValue(1, 3)) {
 				case 1:
-					unj[i].rec.y = 160 -unj[i].rec.height;
+					unj[i].rec.y = 160 - unj[i].rec.height;
 					break;
 				case 2:
-					unj[i].rec.y = 260 -unj[i].rec.height;
+					unj[i].rec.y = 260 - unj[i].rec.height;
 					break;
 				case 3:
 					unj[i].rec.y = 360 - unj[i].rec.height;
@@ -276,6 +281,7 @@ namespace EZ {
 		BeginDrawing();
 		ClearBackground(BLACK);
 		DrawTextureEx(background1, { 0,0 }, 0.0f, 3.0f, RAYWHITE);
+		DrawTextureEx(background2, { 0 , 50 }, 0.0f, 3.0f, RAYWHITE);
 #if DEBUG
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 100.0f, RED);
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);
@@ -305,17 +311,5 @@ namespace EZ {
 	}
 
 	
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

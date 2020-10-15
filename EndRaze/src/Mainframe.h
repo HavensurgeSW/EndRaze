@@ -3,6 +3,8 @@
 #include "raylib.h"
 #include "Player.h"
 #include "Obstacle.h"
+#include "UnJumpObs.h"
+#include "DestrucObs.h"
 #include <iostream>
 using namespace std;
 

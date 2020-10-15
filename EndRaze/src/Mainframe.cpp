@@ -111,12 +111,15 @@ namespace EZ {
 		_parallax1 = GetFrameTime()*400.0f;
 		setPlayerParameters();
 		setObs();
+		setUnj();
+		setDestruc();
 		while (!WindowShouldClose() && screenId == screenID::game&&_mainBool) {
 			if (!_pause) {
 				input();
 				update();
 #if DEBUG
-				cout << player.rec.y << endl;
+				cout << GetScreenHeight() / 2 + player.rec.height << endl;
+			/*	cout << player.rec.y << endl;*/
 			/*	cout << obs[0].rec.x << endl;
 				cout << obs[0].rec.y << endl;*/
 #endif
@@ -157,13 +160,13 @@ namespace EZ {
 				obs[i].rec.x = GetRandomValue(GetScreenWidth()+10, GetScreenWidth()*2);
 				switch (GetRandomValue(1,3)) {
 				case 1:
-					obs[i].rec.y = 125;
+					obs[i].rec.y = 160-obs[i].rec.height;
 					break;
 				case 2:
-					obs[i].rec.y = 225;
+					obs[i].rec.y = 260 - obs[i].rec.height;
 					break;
 				case 3:
-					obs[i].rec.y = 325;
+					obs[i].rec.y = 360 - obs[i].rec.height;
 					break;
 				}
 				for (int j = 0; j < ObstacleMax; j++){
@@ -175,6 +178,63 @@ namespace EZ {
 
 			}
 		}
+
+		for (int i = 0; i < UnjMax; i++) {
+			unj[i].rec.x = unj[i].rec.x - _parallax1;
+
+		}
+		for (int i = 0; i < UnjMax; i++) {
+			if (unj[i].rec.x < -50) {
+				unj[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
+				switch (GetRandomValue(1, 3)) {
+				case 1:
+					unj[i].rec.y = 160 -unj[i].rec.height;
+					break;
+				case 2:
+					unj[i].rec.y = 260 -unj[i].rec.height;
+					break;
+				case 3:
+					unj[i].rec.y = 360 - unj[i].rec.height;
+					break;
+				}
+				for (int j = 0; j < UnjMax; j++) {
+					if (CheckCollisionRecs(unj[i].rec, unj[j].rec)) {
+						unj[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
+					}
+				}
+
+
+			}
+		}
+
+		for (int i = 0; i < DestrucMax; i++) {
+			des[i].rec.x = des[i].rec.x - _parallax1;
+
+		}
+		for (int i = 0; i < DestrucMax; i++) {
+			if (des[i].rec.x < -50) {
+				des[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
+				switch (GetRandomValue(1, 3)) {
+				case 1:
+					des[i].rec.y = 160 - des[i].rec.height;
+					break;
+				case 2:
+					des[i].rec.y = 260 - des[i].rec.height;
+					break;
+				case 3:
+					des[i].rec.y = 360 - des[i].rec.height;
+					break;
+				}
+				for (int j = 0; j < DestrucMax; j++) {
+					if (CheckCollisionRecs(des[i].rec, unj[j].rec)) {
+						des[i].rec.x = GetRandomValue(GetScreenWidth() + 10, GetScreenWidth() * 2);
+					}
+				}
+
+
+			}
+		}
+
 	}
 	void Mainframe::collisions() {
 	
@@ -186,11 +246,21 @@ namespace EZ {
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height - 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height - 100.0f, RED);
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height + 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height + 100.0f , RED);
-		EndDrawing();
 		for (int i = 0; i < ObstacleMax; i++){
 			DrawRectangleRec(obs[i].rec, YELLOW);
 		}
+
+		for (int i = 0; i < UnjMax; i++) {
+			DrawRectangleRec(unj[i].rec, BLUE);
+		}
+
+		for (int i = 0; i < UnjMax; i++) {
+			if (des[i].active){
+				DrawRectangleRec(des[i].rec, GREEN);
+			}
+		}
 	
+		EndDrawing();
 	}
 
 	

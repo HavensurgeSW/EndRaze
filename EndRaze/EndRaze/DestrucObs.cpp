@@ -1,0 +1,14 @@
+#include "DestrucObs.h"
+
+namespace EZ {
+
+	DestrucObs des[DestrucMax];
+
+	void setDestruc() {
+		for (int i = 0; i < DestrucMax; i++) {
+			des[i].rec.height = 30;
+			des[i].rec.width = 25;
+			des[i].rec.y = 75;
+		}
+	}
+}

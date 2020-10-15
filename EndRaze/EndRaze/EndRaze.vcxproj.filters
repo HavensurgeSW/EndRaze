@@ -18,6 +18,12 @@
     <ClCompile Include="..\src\Obstacle.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="UnJumpObs.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DestrucObs.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Mainframe.h">
@@ -27,6 +33,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Obstacle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="UnJumpObs.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DestrucObs.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

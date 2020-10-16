@@ -47,6 +47,12 @@ namespace EZ {
 	void Mainframe::menuScreen() {
 
 
+		obstacle = LoadTexture("../res/obs.png");
+		destructable = LoadTexture("../res/destructable.png");
+		unjumpable = LoadTexture("../res/unj.png");
+		player.tex = LoadTexture("../res/CloakGuy.png");
+		player.cloud = LoadTexture("../res/attackcloud.png");
+
 		background1 = LoadTexture("../res/parallax-mountain-bg.png");
 		background2 = LoadTexture("../res/parallax-mountain-mountains.png");
 		mainTheme = LoadMusicStream("../res/sounds/MenuTheme.ogg");
@@ -57,6 +63,12 @@ namespace EZ {
 		playButton.y = GetScreenHeight() / 2.0f;
 		playButton.height = 30.0f;
 		playButton.width = 65.0f;
+
+		Rectangle tutorialButton;
+		tutorialButton.x = 20.0f;
+		tutorialButton.y = (GetScreenHeight() / 2.0f) + 50.0f;
+		tutorialButton.height = 30.0f;
+		tutorialButton.width = 129.0f;
 
 		Rectangle creditsButton;
 		creditsButton.x = 20.0f;
@@ -87,6 +99,11 @@ namespace EZ {
 			else
 				DrawText(FormatText("Play"), 20, GetScreenHeight() / 2, 30, WHITE);
 
+			if (CheckCollisionPointRec(GetMousePosition(), tutorialButton))
+				DrawText(FormatText("Tutorial"), 20, (GetScreenHeight() / 2)+50, 30, RED);
+			else
+				DrawText(FormatText("Tutorial"), 20, (GetScreenHeight() / 2)+50, 30, WHITE);
+
 
 			if (CheckCollisionPointRec(GetMousePosition(), creditsButton))
 				DrawText(FormatText("Credits"), 20, (GetScreenHeight() / 2) + 100, 30, RED);
@@ -105,6 +122,18 @@ namespace EZ {
 				DrawText(FormatText("Created by:"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 3) + 100, 30, WHITE);
 				DrawText(FormatText("Matias P. Karplus"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 3) + 130, 30, WHITE);
 			}
+
+			if (CheckCollisionPointRec(GetMousePosition(), tutorialButton)) {
+				DrawText(FormatText("Avoid:"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 2) + 20, 25, WHITE);
+				DrawTexture(obstacle, (GetScreenWidth() / 2 + 120), (GetScreenHeight() / 2) + 20, WHITE);
+				DrawTexture(unjumpable, (GetScreenWidth() / 2 + 160), (GetScreenHeight() / 2), WHITE);
+				DrawText(FormatText("Break these by pressing [E]"), (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 2) + 100, 25, WHITE);
+				DrawTexture(player.tex, (GetScreenWidth() / 2 + 40), (GetScreenHeight() / 2) + 140, RAYWHITE);
+				DrawTexture(player.cloud, (GetScreenWidth() / 2 + 75), (GetScreenHeight() / 2) + 140, COLORALPHA);
+				DrawTexture(destructable, (GetScreenWidth() / 2 + 95), (GetScreenHeight() / 2) + 145, RAYWHITE);
+			}
+
+
 			EndDrawing();
 			if (CheckCollisionPointRec(GetMousePosition(), closeButton) && IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
 				exit(0);
@@ -119,6 +148,7 @@ namespace EZ {
 		floor = LoadTexture("../res/Floor.png");
 		obstacle = LoadTexture("../res/obs.png");
 		destructable = LoadTexture("../res/destructable.png");
+		unjumpable = LoadTexture("../res/unj.png");
 		gameTheme = LoadMusicStream("../res/sounds/GameplayTheme.ogg");
 		collision = LoadSound("../res/sounds/collision.ogg");
 		SetMusicVolume(gameTheme, 0.2f);
@@ -345,7 +375,7 @@ namespace EZ {
 
 		for (int i = 0; i < UnjMax; i++) {
 			if (unj[i].active){
-				DrawRectangleRec(unj[i].rec, BLUE);
+				DrawTexture(unjumpable, unj[i].rec.x, unj[i].rec.y, RAYWHITE);
 			}
 		}
 		for (int i = 0; i < DestrucMax; i++) {

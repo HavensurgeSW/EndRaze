@@ -30,6 +30,7 @@ namespace EZ {
 		Texture2D floor;
 		Texture2D obstacle;
 		Texture2D destructable;
+		Texture2D unjumpable;
 		Music mainTheme;
 		Music gameTheme;
 		Sound collision;

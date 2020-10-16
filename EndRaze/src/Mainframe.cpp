@@ -189,11 +189,11 @@ namespace EZ {
 			}
 		}
 
-		if (IsKeyPressed(KEY_SPACE)) {
+		/*if (IsKeyPressed(KEY_SPACE)) {
 			if (player.rec.y == 160 - player.rec.height || player.rec.y == 260 - player.rec.height || player.rec.y == 360 - player.rec.height) {
 				player.rec.y += 10.0f;
 			}
-		}
+		}*/
 	}
 	void Mainframe::update() {
 
@@ -334,6 +334,9 @@ namespace EZ {
 		DrawLine(0,GetScreenHeight()/2+player.rec.height,GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height, RED);
 		DrawLine(0, GetScreenHeight() / 2 + player.rec.height + 100.0f, GetScreenWidth(), GetScreenHeight() / 2 + player.rec.height + 100.0f , RED);
 #endif
+		DrawTexture(player.tex,player.rec.x,player.rec.y, RAYWHITE);
+		DrawTexture(player.cloud, player.atk.x, player.atk.y, COLORALPHA);
+
 		for (int i = 0; i < ObstacleMax; i++){
 			if (obs[i].active){
 				DrawTexture(obstacle, obs[i].rec.x, obs[i].rec.y, RAYWHITE);
@@ -351,7 +354,6 @@ namespace EZ {
 			}
 		}
 	
-		DrawTexture(player.tex,player.rec.x,player.rec.y, RAYWHITE);
 	/*	DrawRectangleRec(player.rec,player.color);*/
 #if DEBUG
 		DrawRectangleLines(player.atk.x, player.atk.y, player.atk.width, player.atk.height, WHITE);

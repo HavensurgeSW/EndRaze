@@ -9,6 +9,7 @@ namespace EZ {
 		Color color;
 		int lives;
 		Texture2D tex;
+		Texture2D cloud;
 		int score;
 		float gravity;
 	};

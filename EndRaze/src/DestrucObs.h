@@ -1,14 +1,17 @@
 #pragma once
 #include "raylib.h"
 
-struct DestrucObs {
-	Rectangle rec;
-	bool active;
-	Texture2D obstacle;
-};
+namespace EZ {
 
-const int DestrucMax = 3;
-extern DestrucObs des[DestrucMax];
+	struct DestrucObs {
+		Rectangle rec;
+		bool active;
+		Texture2D obstacle;
+	};
 
-void setDestruc();
+	const int DestrucMax = 3;
+	extern DestrucObs des[DestrucMax];
+
+	void setDestruc();
+}
 

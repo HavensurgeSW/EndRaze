@@ -3,7 +3,6 @@
 namespace EZ {
 	Player player;
 	
-
 	void setPlayerParameters() {
 		player.rec.width = 25;
 		player.rec.height = 35;
@@ -16,6 +15,7 @@ namespace EZ {
 		player.atk.x = player.rec.x + player.rec.width;
 		player.atk.y = player.rec.y;
 		player.tex = LoadTexture("../res/CloakGuy.png");
+		player.cloud = LoadTexture("../res/attackcloud.png");
 		player.score = -80;
 		player.gravity = 2.0f;
 	}

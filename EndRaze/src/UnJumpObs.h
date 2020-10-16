@@ -1,14 +1,17 @@
 #pragma once
 #include "raylib.h"
 
-struct UnJump {
-	Rectangle rec;
-	Texture2D obstacle;
-	bool active;
-};
+namespace EZ {
 
-const int UnjMax = 2;
-extern UnJump unj[UnjMax];
+	struct UnJump {
+		Rectangle rec;
+		Texture2D obstacle;
+		bool active;
+	};
 
-void setUnj();
+	const int UnjMax = 2;
+	extern UnJump unj[UnjMax];
+
+	void setUnj();
+}
 

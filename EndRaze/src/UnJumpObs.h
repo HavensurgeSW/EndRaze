@@ -7,7 +7,7 @@ struct UnJump {
 	bool active;
 };
 
-const int UnjMax = 4;
+const int UnjMax = 2;
 extern UnJump unj[UnjMax];
 
 void setUnj();

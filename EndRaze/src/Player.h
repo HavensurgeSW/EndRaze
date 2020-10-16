@@ -10,6 +10,7 @@ namespace EZ {
 		int lives;
 		Texture2D tex;
 		int score;
+		float gravity;
 	};
 	extern Player player;
 	void setPlayerParameters();

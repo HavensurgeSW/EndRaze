@@ -157,6 +157,9 @@ namespace EZ {
 
 
 	void Mainframe::input() {
+
+			cout << player.rec.y << endl;
+		if (player.rec.y == 160 - player.rec.height || player.rec.y == 260 - player.rec.height || player.rec.y == 360 - player.rec.height){
 		if (IsKeyPressed(KEY_W)){
 			if (player.rec.y==125.0f){
 				
@@ -175,6 +178,8 @@ namespace EZ {
 				player.atk.y += 100.0f;
 			}
 		}
+
+		}
 		
 		if (IsKeyDown(KEY_E)){
 			for (int i = 0; i < DestrucMax; i++){
@@ -183,8 +188,17 @@ namespace EZ {
 				}
 			}
 		}
+
+		if (IsKeyPressed(KEY_SPACE)) {
+			if (player.rec.y == 160 - player.rec.height || player.rec.y == 260 - player.rec.height || player.rec.y == 360 - player.rec.height) {
+				player.rec.y += 10.0f;
+			}
+		}
 	}
 	void Mainframe::update() {
+
+		//---------------Jump?????--------------------------//
+
 		//---------------MUSIC UPDATE-----------------------//
 		UpdateMusicStream(gameTheme);
 		//---------------LOSE CONDITION---------------------//
